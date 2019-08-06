@@ -1,0 +1,12 @@
+net.minecraft.client.renderer.GlStateManager,com.mojang.blaze3d.platform.GlStateManager
+net.minecraft.util.text.translation.I18n,net.minecraft.client.resources.I18n
+net.minecraftforge.fml.common.eventhandler.Event,net.minecraftforge.eventbus.api.Event
+net.minecraftforge.fml.common.eventhandler.EventPriority,net.minecraftforge.eventbus.api.EventPriority
+net.minecraftforge.fml.common.eventhandler.SubscribeEvent,net.minecraftforge.eventbus.api.SubscribeEvent
+net.minecraftforge.fml.relauncher.Side,net.minecraftforge.api.distmarker.Dist
+net.minecraftforge.fml.relauncher.SideOnly,net.minecraftforge.api.distmarker.OnlyIn
+
+net.minecraftforge.fml.common.network.simpleimpl.NetworkRegistry,net.minecraftforge.fml.network.NetworkRegistry
+net.minecraftforge.fml.common.network.simpleimpl.IMessage
+net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler
+net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper,net.minecraftforge.fml.network.simple.SimpleChannel
