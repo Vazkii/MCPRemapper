@@ -47,7 +47,7 @@ def apply():
 def into_dict(file):
 	out_dict = {}
 
-	with open(file, "r") as f:
+	with open(file, mode="r", encoding="utf-8") as f:
 		for line in f:
 			toks = line.strip().split(",")
 			if len(toks) != 2: 
@@ -100,8 +100,8 @@ def remap_file(filename, mapping_dict, output_dir):
 	output_filename = output_dir + "/" + filename
 	replacements = {}
 
-	with open(filename, "r") as reader:
-		with open(output_filename, "w+") as writer:
+	with open(filename, mode="r", encoding="utf-8") as reader:
+		with open(output_filename, mode="w+", encoding="utf-8") as writer:
 			for line in reader:
 				if line.strip().startswith("import"):
 					clazz = re.sub(r"import (.+?);", r"\1", line).strip()
