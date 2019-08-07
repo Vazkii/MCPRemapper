@@ -1,4 +1,4 @@
-import os, sys, datetime, re
+import os, sys, datetime, re, ntpath
 
 def main():
 	if len(sys.argv) < 2:
@@ -34,14 +34,9 @@ def apply():
 
 	target = sys.argv[2]
 	mappings = sys.argv[3]
-
 	mapping_dict = into_dict(mappings)
+	output_dir = target + "/" +"output/remap-{date:%Y%m%d%H%M%S}".format(date = datetime.datetime.now())
 
-	if not os.path.exists("output"):
-		os.mkdir("output")
-
-	output_dir = "output/remap-{date:%Y%m%d%H%M%S}".format(date = datetime.datetime.now())
-	os.mkdir(output_dir)
 	apply_mappings(target, mapping_dict, output_dir)
 
 def into_dict(file):
@@ -87,20 +82,23 @@ def apply_mappings(file, mapping_dict, output_dir):
 
 def crawl_dir(target, mapping_dict, output_dir):
 	print("Crawling ", target)
-	
-	os.mkdir(output_dir + "/" + target)
-
 	files = os.listdir(target)
 	for f in files:
+		if target == sys.argv[2] + "/output":
+			continue
 		apply_mappings(target + "/" + f, mapping_dict, output_dir)
 
-def remap_file(filename, mapping_dict, output_dir):
-	print("Remapping", filename)
+def remap_file(file, mapping_dict, output_dir):
+	print("Remapping", file)
+	output_filename = output_dir + file.replace(sys.argv[2], "")
+	output_dir = output_filename.replace(path_leaf(output_filename), "")
 
-	output_filename = output_dir + "/" + filename
+	if not os.path.exists(output_dir):
+		os.makedirs(output_dir)
+
 	replacements = {}
 
-	with open(filename, mode="r", encoding="utf-8") as reader:
+	with open(file, mode="r", encoding="utf-8") as reader:
 		with open(output_filename, mode="w+", encoding="utf-8") as writer:
 			for line in reader:
 				if line.strip().startswith("import"):
@@ -125,5 +123,10 @@ def remap_file(filename, mapping_dict, output_dir):
 
 				writer.write(line)
 
+
+
+def path_leaf(path):
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
 
 main()
